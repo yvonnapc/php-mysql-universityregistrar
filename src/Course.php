@@ -54,6 +54,15 @@ class Course {
     {
       $GLOBALS['DB']->exec("DELETE FROM courses");
     }
+    function addStudent($student)
+    {
+      $GLOBALS['DB']->exec("INSERT INTO semester (student_id, course_id) VALUES ({$this->getId()}, {$student->getId()});");
+    }
+    function delete()
+    {
+      $GLOBALS['DB']->exec("DELETE FROM courses WHERE id = {$this->getId()};");
+      $GLOBALS['DB']->exec("DELETE FROM semester WHERE course_id = {$this->getId()};");
+    }
 }
 
 ?>

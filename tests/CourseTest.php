@@ -100,6 +100,25 @@
             //Assert
             $this->assertEquals([$test_course, $test_course2], $result);
         }
+        function test_deleteAll()
+        {
+          //Arrange
+          $id = null;
+          $description = "History";
+          $course_number = "200";
+          $test_course = new Course($id, $description, $course_number);
+          $test_course->save();
+
+          $description2 = "Biology";
+          $course_number2 = "300";
+          $test_course2 = new Course($id, $description, $course_number);
+          $test_course2->save();
+          //Act
+          Course::deleteAll();
+          $result = Course::getAll();
+          //Assert
+          $this->assertEquals([], $result);
+        }
 
     }
 
