@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+   <link rel='stylesheet' href='/styles.css'>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+      <div class="container">
+        <h1>{{ course.getDescription }}</h1>
+
+        <h4>Add a student</h4>
+
+        <form action='/add_students' method='post'>
+           <input id="course_id" name="course_id" type="hidden" value="{{ course.getId }}">
+           <label for="student_id">Select a Student</label>
+           <select id='student_id' name='student_id' type='text'>
+             {% for student in all_students %}
+               <option value="{{ student.getId }}"> {{ student.getName }} </option>
+             {% endfor %}
+           </select>
+           <button class="info" type='submit'>Add student</button>
+       </form>
+
+       {% if students is not empty %}
+        <h3>Students enrolled in this class:</h3>
+        <ul>
+            {% for student in students %}
+                <li>{{ student.getName }}</li>
+                <li>{{ student.getDate }}</li>
+                <!-- <li>{{ task.getDue }}</li> -->
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action='/delete_students' method='post'>
+    <button class='btn-danger' type='submit'>Delete All Students</button>
+    </form>
+
+    <h3><a href="/courses/{{ course.getId }}/edit">Edit This Course</a></h3>
+
+    <h3><a href='/'>Home</a></h3>
+      </div>
+  </body>
+</html>

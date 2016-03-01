@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+   <link rel='stylesheet' href='/styles.css'>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+      <div class="container">
+        <h1>Edit this course: {{ course.getDescription }}</h1>
+
+        <form action="/courses/{{ course.getId }}" method="post">
+        <input name="_method" type="hidden" value ="patch">
+
+        <label for="description">Rename this course</label>
+        <input id="description" name="description" type="text">
+
+        <button type="submit">Update</button>
+      </form>
+
+      <form action="/courses/{{ course.getId }}" method="post">
+        <input name="_method" type="hidden" value="delete">
+
+        <button type="submit">Delete this course!</button>
+      </form>
+
+
+
+    <h3><a href='/'>Home</a></h3>
+      </div>
+  </body>
+</html>
