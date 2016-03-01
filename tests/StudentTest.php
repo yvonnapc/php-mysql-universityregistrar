@@ -74,6 +74,7 @@ class StudentTest extends PHPUnit_Framework_TestCase
       $enroll_day = "2016-03-03";
       $test_student = new Student($id, $name, $enroll_day);
       $test_student->save();
+      
       $name2 = "Yvonna";
       $enroll_day2 = "2016-03-03";
       $test_student2 = new Student($id, $name2, $enroll_day2);

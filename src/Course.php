@@ -56,7 +56,23 @@ class Course {
     }
     function addStudent($student)
     {
-      $GLOBALS['DB']->exec("INSERT INTO semester (student_id, course_id) VALUES ({$this->getId()}, {$student->getId()});");
+      $GLOBALS['DB']->exec("INSERT INTO semester (course_id, student_id) VALUES ({$this->getId()}, {$student->getId()});");
+    }
+    function students()
+    {
+      $matching_students = $GLOBALS['DB']->query("SELECT students.* FROM courses
+                      JOIN semester ON (courses.id = semester.course_id)
+                      JOIN students ON (semester.student_id = students.id)
+                      WHERE courses.id = {$this->getId()}");
+      $students = array();
+      foreach($matching_students as $student){
+        $id = $student['id'];
+        $name = $student['name'];
+        $enroll_day = $student['enroll_day'];
+        $new_student = new Student($id, $name, $enroll_day);
+        array_push($students, $new_student);
+      }
+      return $students;
     }
     function delete()
     {

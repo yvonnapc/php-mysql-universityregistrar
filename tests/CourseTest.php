@@ -6,6 +6,7 @@
     */
 
     require_once "src/Course.php";
+    require_once "src/Student.php";
 
     $server = 'mysql:host=localhost;dbname=university_test';
     $username = 'root';
@@ -18,6 +19,7 @@
         protected function tearDown()
         {
             Course::deleteAll();
+            Student::deleteAll();
         }
 
         function test_getDescription()
@@ -118,6 +120,25 @@
           $result = Course::getAll();
           //Assert
           $this->assertEquals([], $result);
+        }
+        function test_addStudent()
+        {
+          //Arrange
+          $id = null;
+          $description = "History";
+          $course_number = "200";
+          $test_course = new Course($id, $description, $course_number);
+          $test_course->save();
+
+          $name = "Yvonna";
+          $id = null;
+          $enroll_day = "2016-04-03";
+          $test_student = new Student($name, $id, $enroll_day);
+          $test_student->save();
+          //Act
+          $test_course->addStudent($test_student);
+          //Assert
+          $this->assertEquals([$test_student], $test_course->students());
         }
 
     }
