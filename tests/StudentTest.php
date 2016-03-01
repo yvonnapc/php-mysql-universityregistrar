@@ -24,8 +24,8 @@ class StudentTest extends PHPUnit_Framework_TestCase
       $name = "Yvonna Contreras";
       $id = null;
       $enroll_day = "2016-03-01";
-      $test_student = new Student($name, $id, $enroll_day);
-      $test_student->save();
+      $test_student = new Student($id, $name, $enroll_day);
+
       //Act
       $result = $test_student->getName($name);
       //Assert
@@ -36,11 +36,54 @@ class StudentTest extends PHPUnit_Framework_TestCase
       $name = "Michael";
       $id = null;
       $enroll_day = "2016-03-03";
-      $test_student = new Student($name, $id, $enroll_day);
+      $test_student = new Student($id, $name, $enroll_day);
       //Act
       $result = $test_student->getId();
       //Assert
       $this->assertEquals($id, $result);
+    }
+    function test_getEnrollDay()
+    {
+      $name = "Michael";
+      $id = null;
+      $enroll_day = "2016-03-03";
+      $test_student = new Student($id, $name,  $enroll_day);
+
+      //Act
+      $result = $test_student->getEnrollDay($enroll_day);
+      //Assert
+      $this->assertEquals("2016-03-03", $result);
+    }
+    function test_save()
+    {
+      //Arrange
+      $id = null;
+      $name = "Michael";
+      $enroll_day = "2016-03-03";
+      $test_student = new Student($id, $name, $enroll_day);
+      $test_student->save();
+      //Act
+      $result = Student::getAll();
+      //Assert
+      $this->assertEquals($test_student, $result[0]);
+    }
+    function test_getAll()
+    {
+      $name = "Michael";
+      $id = null;
+      $enroll_day = "2016-03-03";
+      $test_student = new Student($name, $enroll_day, $id);
+      $test_student->save();
+      $name2 = "Yvonna";
+      $enroll_day2 = "2016-03-03";
+      $test_student2 = new Student($name2,  $enroll_day2, $id);
+      $test_student2->save();
+
+      //Act
+      $result = Student::getAll();
+
+      //Assert
+      $this->assertEquals([$test_student, $test_student2], $result);
     }
 }
 
