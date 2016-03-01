@@ -140,6 +140,21 @@
           //Assert
           $this->assertEquals([$test_student], $test_course->students());
         }
+        function testUpdate()
+        {
+          //Arrange
+          $id = null;
+          $description = "History";
+          $course_number = "300";
+          $test_course = new Course($id, $description, $course_number);
+          $test_course->save();
+
+          $new_description = "Womens History";
+          //Act
+          $test_course->update($new_description);
+          //Assert
+          $this->assertEquals("Womens History", $test_course->getDescription());
+        }
 
     }
 

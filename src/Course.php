@@ -79,6 +79,11 @@ class Course {
       $GLOBALS['DB']->exec("DELETE FROM courses WHERE id = {$this->getId()};");
       $GLOBALS['DB']->exec("DELETE FROM semester WHERE course_id = {$this->getId()};");
     }
+    function update($new_description)
+    {
+      $GLOBALS['DB']->exec("UPDATE courses SET description = '{$new_description}' WHERE id = {$this->getId()};");
+      $this->setDescription($new_description);
+    }
 }
 
 ?>
