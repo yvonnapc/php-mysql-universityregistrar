@@ -1,12 +1,36 @@
-<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
-   <link rel='stylesheet' href='/styles.css'>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
+    <link rel='stylesheet' href='/styles.css'>
+    <title>University</title>
+</head>
+<body>
+    <div class="container">
+        {% if students is not empty %}
+          <p>Here are all your students:</p>
+          <ul>
+            {% for student in students %}
+                <li><a href="/students/{{ student.getId }}">{{ student.getName }} {{ student.getEnrollDay }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
 
-  </body>
+        <form action='/students' method='post'>
+          <label for='name'>Student Name:</label>
+          <input id='name' name='name' type='text'><br>
+
+          <label for='enroll_day'>Enroll Day:</label>
+          <input id='enroll_day' name='enroll_day' type='date'>
+          
+
+          <button class="btn-success" type='submit'>Add student</button>
+        </form>
+
+        <form action='/delete_students' method='post'>
+            <button class="btn-danger" type='submit'>Clear</button>
+        </form>
+
+        <h2><a href='/'>Home</a></h2>
+    </div>
+</body>
 </html>

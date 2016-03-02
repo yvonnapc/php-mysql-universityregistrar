@@ -26,7 +26,7 @@
     });
 
     $app->post("/students", function() use($app){
-      $student = new Student($_POST['name'], $_POST['start_date']);
+      $student = new Student($id = null, $_POST['name'], $_POST['enroll_day']);
       $student->save();
       return $app['twig']->render('students.html.twig', array('students' => Student::getAll()));
     });
@@ -40,7 +40,7 @@
       $course = Course::find($_POST['course_id']);
       $student = Student::find($_POST['student_id']);
       $student->addCourse($course);
-      return $app['twig']->render('stduents.html.twig', array('student' => $student, 'students' => Student::getAll(), 'courses' => $student->courses(), 'all_courses' => Course::getAll()));
+      return $app['twig']->render('stnts.html.twig', array('student' => $student, 'students' => Student::getAll(), 'courses' => $student->courses(), 'all_courses' => Course::getAll()));
     });
 
     $app->post("/delete_students", function() use($app){

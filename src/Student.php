@@ -34,6 +34,35 @@ class Student
       $GLOBALS['DB']->exec("INSERT INTO students (name, enroll_day) VALUES ('{$this->getName()}', '{$this->getEnrollDay()}');");
       $this->id = $GLOBALS['DB']->lastInsertId();
     }
+    function courses()
+    {
+        $matching_courses = $GLOBALS['DB']->query("SELECT courses.* FROM students
+                        JOIN semester ON (students.id = semester.student_id)
+                        JOIN courses ON (semester.course_id = course.id)
+                        WHERE students.id = {$this->getId()}");
+        $courses = array();
+        foreach($matching_courses as $course){
+          $id = $course['id'];
+          $description = $course['description'];
+          $course_number = $course['course_number'];
+          $new_course = new Course($id, $description, $course_number);
+          array_push($courses, $new_course);
+        }
+        return $courses;
+    }
+    static function find($search_id)
+    {
+      $found_student = null;
+      $students = Student::getAll();
+      foreach($students as $student)
+      {
+        $student_id = $student->getId();
+        if ($student_id == $search_id) {
+          $found_student = $student;
+        }
+      }
+      return $found_student;
+    }
     static function getAll()
     {
       $returned_students = $GLOBALS['DB']->query("SELECT * FROM students;");
